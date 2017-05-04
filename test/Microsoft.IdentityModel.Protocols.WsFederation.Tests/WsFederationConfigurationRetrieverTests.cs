@@ -34,7 +34,6 @@ using Microsoft.IdentityModel.Tests;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Xml;
 using Xunit;
-using System.Reflection;
 
 namespace Microsoft.IdentityModel.Protocols.WsFederation.Tests
 {
