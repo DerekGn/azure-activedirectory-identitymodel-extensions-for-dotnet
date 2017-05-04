@@ -74,15 +74,24 @@ namespace Microsoft.IdentityModel.Protocols.WsFederation.Tests
         }
 
 #pragma warning disable CS3016 // Arrays as attribute arguments is not CLS-compliant
-        [Theory, MemberData("ReadEntityDescriptorNullConfigurationTheoryData")]
+        [Theory, MemberData("ReadEntityDescriptorTheoryData")]
 #pragma warning restore CS3016 // Arrays as attribute arguments is not CLS-compliant
-        public void ReadEntityDescriptorNullConfigurationTest(WsFederationMetadataTheoryData theoryData)
+        public void ReadEntityDescriptorTest(WsFederationMetadataTheoryData theoryData)
         {
-            TestUtilities.WriteHeader($"{this}.ReadEntityDescriptorNullConfigurationTest", theoryData);
+            TestUtilities.WriteHeader($"{this}.ReadEntityDescriptorTest", theoryData);
+            var serializer = new WsFederationMetadataSerializerPublic();
             try
             {
-                var serializer = new WsFederationMetadataSerializerPublic();
-                serializer.ReadEntityDescriptorPublic(null, XmlReader.Create("idp-metadata.xml"));
+                serializer.ReadEntityDescriptorPublic(null, XmlReader.Create(new StringReader("some string")));
+                theoryData.ExpectedException.ProcessNoException();
+            }
+            catch (Exception ex)
+            {
+                theoryData.ExpectedException.ProcessException(ex);
+            }
+            try
+            {
+                serializer.ReadEntityDescriptorPublic(new WsFederationConfiguration(), null);
                 theoryData.ExpectedException.ProcessNoException();
             }
             catch (Exception ex)
@@ -92,15 +101,24 @@ namespace Microsoft.IdentityModel.Protocols.WsFederation.Tests
         }
 
 #pragma warning disable CS3016 // Arrays as attribute arguments is not CLS-compliant
-        [Theory, MemberData("ReadKeyDescriptorForSigningNullConfigurationTheoryData")]
+        [Theory, MemberData("ReadKeyDescriptorForSigningTheoryData")]
 #pragma warning restore CS3016 // Arrays as attribute arguments is not CLS-compliant
-        public void ReadKeyDescriptorForSigningNullConfigurationTest(WsFederationMetadataTheoryData theoryData)
+        public void ReadKeyDescriptorForSigningTest(WsFederationMetadataTheoryData theoryData)
         {
-            TestUtilities.WriteHeader($"{this}.ReadKeyDescriptorForSigningNullConfigurationTest", theoryData);
+            TestUtilities.WriteHeader($"{this}.ReadKeyDescriptorForSigningTheoryData", theoryData);
+            var serializer = new WsFederationMetadataSerializerPublic();
             try
             {
-                var serializer = new WsFederationMetadataSerializerPublic();
-                serializer.ReadKeyDescriptorForSigningPublic(null, XmlReader.Create("idp-metadata.xml"));
+                serializer.ReadKeyDescriptorForSigningPublic(null, XmlReader.Create(new StringReader("some string")));
+                theoryData.ExpectedException.ProcessNoException();
+            }
+            catch (Exception ex)
+            {
+                theoryData.ExpectedException.ProcessException(ex);
+            }
+            try
+            {
+                serializer.ReadKeyDescriptorForSigningPublic(new WsFederationConfiguration(), null);
                 theoryData.ExpectedException.ProcessNoException();
             }
             catch (Exception ex)
@@ -110,15 +128,24 @@ namespace Microsoft.IdentityModel.Protocols.WsFederation.Tests
         }
 
 #pragma warning disable CS3016 // Arrays as attribute arguments is not CLS-compliant
-        [Theory, MemberData("ReadSecurityTokenServiceTypeRoleDescriptorNullConfigurationTheoryData")]
+        [Theory, MemberData("ReadSecurityTokenServiceTypeRoleDescriptorTheoryData")]
 #pragma warning restore CS3016 // Arrays as attribute arguments is not CLS-compliant
-        public void ReadSecurityTokenServiceTypeRoleDescriptorNullConfigurationTest(WsFederationMetadataTheoryData theoryData)
+        public void ReadSecurityTokenServiceTypeRoleDescriptorTest(WsFederationMetadataTheoryData theoryData)
         {
-            TestUtilities.WriteHeader($"{this}.ReadSecurityTokenServiceTypeRoleDescriptorNullConfigurationTest", theoryData);
+            TestUtilities.WriteHeader($"{this}.ReadSecurityTokenServiceTypeRoleDescriptorTest", theoryData);
+            var serializer = new WsFederationMetadataSerializerPublic();
+            try
+            { 
+                serializer.ReadSecurityTokenServiceTypeRoleDescriptorPublic(null, XmlReader.Create(new StringReader("some string")));
+                theoryData.ExpectedException.ProcessNoException();
+            }
+            catch (Exception ex)
+            {
+                theoryData.ExpectedException.ProcessException(ex);
+            }
             try
             {
-                var serializer = new WsFederationMetadataSerializerPublic();
-                serializer.ReadSecurityTokenServiceTypeRoleDescriptorPublic(null, XmlReader.Create("idp-metadata.xml"));
+                serializer.ReadSecurityTokenServiceTypeRoleDescriptorPublic(new WsFederationConfiguration(), null);
                 theoryData.ExpectedException.ProcessNoException();
             }
             catch (Exception ex)
@@ -128,15 +155,24 @@ namespace Microsoft.IdentityModel.Protocols.WsFederation.Tests
         }
 
 #pragma warning disable CS3016 // Arrays as attribute arguments is not CLS-compliant
-        [Theory, MemberData("ReadSecurityTokenEndpointNullConfigurationTheoryData")]
+        [Theory, MemberData("ReadSecurityTokenEndpointTheoryData")]
 #pragma warning restore CS3016 // Arrays as attribute arguments is not CLS-compliant
-        public void ReadSecurityTokenEndpointNullConfigurationTest(WsFederationMetadataTheoryData theoryData)
+        public void ReadSecurityTokenEndpointTest(WsFederationMetadataTheoryData theoryData)
         {
-            TestUtilities.WriteHeader($"{this}.ReadSecurityTokenEndpointNullConfigurationTest", theoryData);
+            TestUtilities.WriteHeader($"{this}.ReadSecurityTokenEndpointTest", theoryData);
+            var serializer = new WsFederationMetadataSerializerPublic();
             try
             {
-                var serializer = new WsFederationMetadataSerializerPublic();
-                serializer.ReadSecurityTokenEndpointPublic(null, XmlReader.Create("idp-metadata.xml"));
+                serializer.ReadSecurityTokenEndpointPublic(null, XmlReader.Create(new StringReader("some string")));
+                theoryData.ExpectedException.ProcessNoException();
+            }
+            catch (Exception ex)
+            {
+                theoryData.ExpectedException.ProcessException(ex);
+            }
+            try
+            { 
+                serializer.ReadSecurityTokenEndpointPublic(new WsFederationConfiguration(), null);
                 theoryData.ExpectedException.ProcessNoException();
             }
             catch (Exception ex)
@@ -228,7 +264,7 @@ namespace Microsoft.IdentityModel.Protocols.WsFederation.Tests
             }
         }
 
-        public static TheoryData<WsFederationMetadataTheoryData> ReadEntityDescriptorNullConfigurationTheoryData
+        public static TheoryData<WsFederationMetadataTheoryData> ReadEntityDescriptorTheoryData
         {
             get
             {
@@ -237,15 +273,15 @@ namespace Microsoft.IdentityModel.Protocols.WsFederation.Tests
                 theoryData.Add(
                     new WsFederationMetadataTheoryData
                     {
-                        ExpectedException = ExpectedException.ArgumentNullException(),
-                        TestId = "call ReadEntityDescriptor with null configuration parameter"
+                        ExpectedException = ExpectedException.ArgumentNullException("IDX10000:"),
+                        TestId = "ReadEntityDescriptor"
                     });
 
                 return theoryData;
             }
         }
 
-        public static TheoryData<WsFederationMetadataTheoryData> ReadKeyDescriptorForSigningNullConfigurationTheoryData
+        public static TheoryData<WsFederationMetadataTheoryData> ReadKeyDescriptorForSigningTheoryData
         {
             get
             {
@@ -254,15 +290,15 @@ namespace Microsoft.IdentityModel.Protocols.WsFederation.Tests
                 theoryData.Add(
                     new WsFederationMetadataTheoryData
                     {
-                        ExpectedException = ExpectedException.ArgumentNullException(),
-                        TestId = "call ReadKeyDescriptorForSigning with null configuration parameter"
+                        ExpectedException = ExpectedException.ArgumentNullException("IDX10000:"),
+                        TestId = "ReadKeyDescriptorForSigning"
                     });
 
                 return theoryData;
             }
         }
 
-        public static TheoryData<WsFederationMetadataTheoryData> ReadSecurityTokenServiceTypeRoleDescriptorNullConfigurationTheoryData
+        public static TheoryData<WsFederationMetadataTheoryData> ReadSecurityTokenServiceTypeRoleDescriptorTheoryData
         {
             get
             {
@@ -271,15 +307,15 @@ namespace Microsoft.IdentityModel.Protocols.WsFederation.Tests
                 theoryData.Add(
                     new WsFederationMetadataTheoryData
                     {
-                        ExpectedException = ExpectedException.ArgumentNullException(),
-                        TestId = "call ReadSecurityTokenServiceTypeRoleDescriptor with null configuration parameter"
+                        ExpectedException = ExpectedException.ArgumentNullException("IDX10000:"),
+                        TestId = "ReadSecurityTokenServiceTypeRoleDescriptor"
                     });
 
                 return theoryData;
             }
         }
 
-        public static TheoryData<WsFederationMetadataTheoryData> ReadSecurityTokenEndpointNullConfigurationTheoryData
+        public static TheoryData<WsFederationMetadataTheoryData> ReadSecurityTokenEndpointTheoryData
         {
             get
             {
@@ -288,8 +324,8 @@ namespace Microsoft.IdentityModel.Protocols.WsFederation.Tests
                 theoryData.Add(
                     new WsFederationMetadataTheoryData
                     {
-                        ExpectedException = ExpectedException.ArgumentNullException(),
-                        TestId = "call ReadSecurityTokenEndpoint with null configuration parameter"
+                        ExpectedException = ExpectedException.ArgumentNullException("IDX10000:"),
+                        TestId = "ReadSecurityTokenEndpoint"
                     });
 
                 return theoryData;
