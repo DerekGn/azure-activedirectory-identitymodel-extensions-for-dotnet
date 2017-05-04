@@ -31,6 +31,7 @@ using System.Xml;
 using System.Xml.Schema;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Xml;
+using Microsoft.IdentityModel.Logging;
 
 namespace Microsoft.IdentityModel.Protocols.WsFederation
 {
@@ -80,6 +81,9 @@ namespace Microsoft.IdentityModel.Protocols.WsFederation
         /// <param name="reader">xmlreader</param>
         protected virtual void ReadEntityDescriptor(WsFederationConfiguration configuration, XmlReader reader)
         {
+            if (configuration == null)
+                throw LogHelper.LogArgumentNullException(nameof(configuration));
+
             XmlUtil.CheckReaderOnEntry(reader, WsFederationConstants.Elements.EntityDescriptor, WsFederationConstants.Namespaces.MetadataNamespace);
 
             // get entityID for issuer
@@ -110,6 +114,9 @@ namespace Microsoft.IdentityModel.Protocols.WsFederation
         /// <param name="reader">xmlreader</param>
         protected virtual void ReadKeyDescriptorForSigning(WsFederationConfiguration configuration, XmlReader reader)
         {
+            if (configuration == null)
+                throw LogHelper.LogArgumentNullException(nameof(configuration));
+
             XmlUtil.CheckReaderOnEntry(reader, WsFederationConstants.Elements.KeyDescriptor, WsFederationConstants.Namespaces.MetadataNamespace);
 
             if (!IsKeyDescriptorForSigning(reader))
@@ -146,6 +153,9 @@ namespace Microsoft.IdentityModel.Protocols.WsFederation
         /// <param name="reader">xmlreader</param>
         protected virtual void ReadSecurityTokenServiceTypeRoleDescriptor(WsFederationConfiguration configuration, XmlReader reader)
         {
+            if (configuration == null)
+                throw LogHelper.LogArgumentNullException(nameof(configuration));
+
             XmlUtil.CheckReaderOnEntry(reader, WsFederationConstants.Elements.RoleDescriptor, WsFederationConstants.Namespaces.MetadataNamespace);
 
             if (!IsSecurityTokenServiceTypeRoleDescriptor(reader))
@@ -177,6 +187,9 @@ namespace Microsoft.IdentityModel.Protocols.WsFederation
         /// <param name="reader">xmlreader</param>
         protected virtual void ReadSecurityTokenEndpoint(WsFederationConfiguration configuration, XmlReader reader)
         {
+            if (configuration == null)
+                throw LogHelper.LogArgumentNullException(nameof(configuration));
+
             XmlUtil.CheckReaderOnEntry(reader, WsFederationConstants.Elements.SecurityTokenEndpoint, WsFederationConstants.Namespaces.FederationNamespace);
 
             reader.ReadStartElement();  // SecurityTokenServiceEndpoint

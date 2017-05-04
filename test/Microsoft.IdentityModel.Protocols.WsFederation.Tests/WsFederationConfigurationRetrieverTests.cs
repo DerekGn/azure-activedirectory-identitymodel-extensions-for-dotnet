@@ -34,6 +34,7 @@ using Microsoft.IdentityModel.Tests;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Xml;
 using Xunit;
+using System.Reflection;
 
 namespace Microsoft.IdentityModel.Protocols.WsFederation.Tests
 {
@@ -70,6 +71,78 @@ namespace Microsoft.IdentityModel.Protocols.WsFederation.Tests
             }
 
             TestUtilities.AssertFailIfErrors(errors);
+        }
+
+#pragma warning disable CS3016 // Arrays as attribute arguments is not CLS-compliant
+        [Theory, MemberData("ReadEntityDescriptorNullConfigurationTheoryData")]
+#pragma warning restore CS3016 // Arrays as attribute arguments is not CLS-compliant
+        public void ReadEntityDescriptorNullConfigurationTest(WsFederationMetadataTheoryData theoryData)
+        {
+            TestUtilities.WriteHeader($"{this}.ReadEntityDescriptorNullConfigurationTest", theoryData);
+            try
+            {
+                var serializer = new WsFederationMetadataSerializerPublic();
+                serializer.ReadEntityDescriptorPublic(null, XmlReader.Create("idp-metadata.xml"));
+                theoryData.ExpectedException.ProcessNoException();
+            }
+            catch (Exception ex)
+            {
+                theoryData.ExpectedException.ProcessException(ex);
+            }
+        }
+
+#pragma warning disable CS3016 // Arrays as attribute arguments is not CLS-compliant
+        [Theory, MemberData("ReadKeyDescriptorForSigningNullConfigurationTheoryData")]
+#pragma warning restore CS3016 // Arrays as attribute arguments is not CLS-compliant
+        public void ReadKeyDescriptorForSigningNullConfigurationTest(WsFederationMetadataTheoryData theoryData)
+        {
+            TestUtilities.WriteHeader($"{this}.ReadKeyDescriptorForSigningNullConfigurationTest", theoryData);
+            try
+            {
+                var serializer = new WsFederationMetadataSerializerPublic();
+                serializer.ReadKeyDescriptorForSigningPublic(null, XmlReader.Create("idp-metadata.xml"));
+                theoryData.ExpectedException.ProcessNoException();
+            }
+            catch (Exception ex)
+            {
+                theoryData.ExpectedException.ProcessException(ex);
+            }
+        }
+
+#pragma warning disable CS3016 // Arrays as attribute arguments is not CLS-compliant
+        [Theory, MemberData("ReadSecurityTokenServiceTypeRoleDescriptorNullConfigurationTheoryData")]
+#pragma warning restore CS3016 // Arrays as attribute arguments is not CLS-compliant
+        public void ReadSecurityTokenServiceTypeRoleDescriptorNullConfigurationTest(WsFederationMetadataTheoryData theoryData)
+        {
+            TestUtilities.WriteHeader($"{this}.ReadSecurityTokenServiceTypeRoleDescriptorNullConfigurationTest", theoryData);
+            try
+            {
+                var serializer = new WsFederationMetadataSerializerPublic();
+                serializer.ReadSecurityTokenServiceTypeRoleDescriptorPublic(null, XmlReader.Create("idp-metadata.xml"));
+                theoryData.ExpectedException.ProcessNoException();
+            }
+            catch (Exception ex)
+            {
+                theoryData.ExpectedException.ProcessException(ex);
+            }
+        }
+
+#pragma warning disable CS3016 // Arrays as attribute arguments is not CLS-compliant
+        [Theory, MemberData("ReadSecurityTokenEndpointNullConfigurationTheoryData")]
+#pragma warning restore CS3016 // Arrays as attribute arguments is not CLS-compliant
+        public void ReadSecurityTokenEndpointNullConfigurationTest(WsFederationMetadataTheoryData theoryData)
+        {
+            TestUtilities.WriteHeader($"{this}.ReadSecurityTokenEndpointNullConfigurationTest", theoryData);
+            try
+            {
+                var serializer = new WsFederationMetadataSerializerPublic();
+                serializer.ReadSecurityTokenEndpointPublic(null, XmlReader.Create("idp-metadata.xml"));
+                theoryData.ExpectedException.ProcessNoException();
+            }
+            catch (Exception ex)
+            {
+                theoryData.ExpectedException.ProcessException(ex);
+            }
         }
 
         public static TheoryData<WsFederationMetadataTheoryData> MetadataTheoryData
@@ -155,17 +228,110 @@ namespace Microsoft.IdentityModel.Protocols.WsFederation.Tests
             }
         }
 
+        public static TheoryData<WsFederationMetadataTheoryData> ReadEntityDescriptorNullConfigurationTheoryData
+        {
+            get
+            {
+                var theoryData = new TheoryData<WsFederationMetadataTheoryData>();
+
+                theoryData.Add(
+                    new WsFederationMetadataTheoryData
+                    {
+                        ExpectedException = ExpectedException.ArgumentNullException(),
+                        TestId = "call ReadEntityDescriptor with null configuration parameter"
+                    });
+
+                return theoryData;
+            }
+        }
+
+        public static TheoryData<WsFederationMetadataTheoryData> ReadKeyDescriptorForSigningNullConfigurationTheoryData
+        {
+            get
+            {
+                var theoryData = new TheoryData<WsFederationMetadataTheoryData>();
+
+                theoryData.Add(
+                    new WsFederationMetadataTheoryData
+                    {
+                        ExpectedException = ExpectedException.ArgumentNullException(),
+                        TestId = "call ReadKeyDescriptorForSigning with null configuration parameter"
+                    });
+
+                return theoryData;
+            }
+        }
+
+        public static TheoryData<WsFederationMetadataTheoryData> ReadSecurityTokenServiceTypeRoleDescriptorNullConfigurationTheoryData
+        {
+            get
+            {
+                var theoryData = new TheoryData<WsFederationMetadataTheoryData>();
+
+                theoryData.Add(
+                    new WsFederationMetadataTheoryData
+                    {
+                        ExpectedException = ExpectedException.ArgumentNullException(),
+                        TestId = "call ReadSecurityTokenServiceTypeRoleDescriptor with null configuration parameter"
+                    });
+
+                return theoryData;
+            }
+        }
+
+        public static TheoryData<WsFederationMetadataTheoryData> ReadSecurityTokenEndpointNullConfigurationTheoryData
+        {
+            get
+            {
+                var theoryData = new TheoryData<WsFederationMetadataTheoryData>();
+
+                theoryData.Add(
+                    new WsFederationMetadataTheoryData
+                    {
+                        ExpectedException = ExpectedException.ArgumentNullException(),
+                        TestId = "call ReadSecurityTokenEndpoint with null configuration parameter"
+                    });
+
+                return theoryData;
+            }
+        }
+
         public class WsFederationMetadataTheoryData : TheoryDataBase
         {
+            public WsFederationConfiguration Configuration { get; set; }
+
             public string Metadata { get; set; }
 
-            public SecurityKey SigingKey { get; set; }
+            public string ProtectedMethodName { get; set; }
 
-            public WsFederationConfiguration Configuration { get; set; }
+            public SecurityKey SigingKey { get; set; }
 
             public override string ToString()
             {
                 return $"TestId: {TestId}, {ExpectedException}";
+            }
+        }
+
+        private class WsFederationMetadataSerializerPublic : WsFederationMetadataSerializer
+        {
+            public void ReadEntityDescriptorPublic(WsFederationConfiguration configuration, XmlReader reader)
+            {
+                base.ReadEntityDescriptor(configuration, reader);
+            }
+
+            public void ReadKeyDescriptorForSigningPublic(WsFederationConfiguration configuration, XmlReader reader)
+            {
+                base.ReadKeyDescriptorForSigning(configuration, reader);
+            }
+
+            public void ReadSecurityTokenServiceTypeRoleDescriptorPublic(WsFederationConfiguration configuration, XmlReader reader)
+            {
+                base.ReadSecurityTokenServiceTypeRoleDescriptor(configuration, reader);
+            }
+
+            public void ReadSecurityTokenEndpointPublic(WsFederationConfiguration configuration, XmlReader reader)
+            {
+                base.ReadSecurityTokenEndpoint(configuration, reader);
             }
         }
     }

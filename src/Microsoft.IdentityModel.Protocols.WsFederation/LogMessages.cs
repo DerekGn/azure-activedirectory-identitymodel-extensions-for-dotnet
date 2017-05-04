@@ -39,6 +39,7 @@ namespace Microsoft.IdentityModel.Protocols.WsFederation
         // wsfederation messages
         internal const string IDX10900 = "IDX10900: Building wsfederation message from query string: '{0}'.";
         internal const string IDX10901 = "IDX10901: Building wsfederation message from uri: '{0}'.";
+        internal const string IDX10902 = "IDX10902: Token is found in wresult";
 
         // xml metadata messages
         internal const string IDX13000 = "IDX13000: Exception thrown while reading WsFedereationMetadata. Element '{0}'. Caught exception: '{1}'.";
